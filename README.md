@@ -31,7 +31,7 @@
 
 1. Review the base template files to ensure your project's needs are met. Some helpful tips:
 
-   - If you'd like to change the .gitignore, GitHub has some [awesome templates here](https://github.com/github/gitignore).
+   - If you'd like to change the [.gitignore](/.gitignore), GitHub has some [awesome templates here](https://github.com/github/gitignore).
    - You can also query the [gitignore.io API](https://docs.gitignore.io/install/command-line) to find a list of recommended gitignore entries to suit virtually any type of project.
 
      ```bash
