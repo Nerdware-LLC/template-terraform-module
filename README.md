@@ -3,8 +3,8 @@
 
   <!-- PROJECT LOGO -->
 
-  <a href="https://github.com/Nerdware-LLC">
-    <img src="https://github.com/Nerdware-LLC/.github/blob/main/profile/nerdware_logo.png" height="120" alt="Nerdware_Logo" />
+  <a href="https://registry.terraform.io/">
+    <img alt="Terraform" src="https://github.com/Nerdware-LLC/Nerdware-LLC/blob/main/assets/terraform_banner.png" width="600px" />
   </a>
 
   <!-- PROJECT NAME/HEADER -->
