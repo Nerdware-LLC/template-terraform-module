@@ -65,9 +65,10 @@
 
 5. Profit 💰💰💰🥳🎉 <!-- https://knowyourmeme.com/memes/profit -->
 
-## 🗺 Project Layout
+> Need help? 🤔 Check out my new [**YouTube Channel**](https://www.youtube.com/channel/UCguSCK_j1obMVXvv-DUS3ng) with helpful guides covering how to **_code your cloud_** with Terraform, Terragrunt, Packer, Golang, CI/CD tools, and more.
 
-- [`.github`](/.github) GitHub related files.
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## 📝 License
 
