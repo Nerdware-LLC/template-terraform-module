@@ -2,21 +2,24 @@
 <div align="center">
 
   <!-- PROJECT LOGO -->
+
   <a href="https://github.com/Nerdware-LLC">
     <img src="https://github.com/Nerdware-LLC/.github/blob/main/profile/nerdware_logo.png" height="120" alt="Nerdware_Logo" />
   </a>
 
   <!-- PROJECT NAME/HEADER -->
 
-  <h1>Nerdware Template Repository</h1>
+  <h1>Terraform Module Template Repo</h1>
 
   <!-- PROJECT TAGLINE -->
 
-**🚀 An Awesome Template to Jumpstart Projects 🚀**
+**🚀 An Awesome Template to Jumpstart Terraform Modules 🚀**
 
   <!-- PROJECT SHIELDS -->
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![pre-commit][pre-commit-shield]](https://github.com/pre-commit/pre-commit)
+[![semantic-release][semantic-shield]](https://github.com/semantic-release/semantic-release)
+[![license][license-shield]](/LICENSE)
 
 </div>
 
@@ -26,9 +29,9 @@
 
 ### **_Post-Initialization Setup_**
 
-1. Update the [**.gitignore**](/.gitignore).
+1. Review the base template files to ensure your project's needs are met. Some helpful tips:
 
-   - GitHub has some [awesome templates here](https://github.com/github/gitignore).
+   - If you'd like to change the .gitignore, GitHub has some [awesome templates here](https://github.com/github/gitignore).
    - You can also query the [gitignore.io API](https://docs.gitignore.io/install/command-line) to find a list of recommended gitignore entries to suit virtually any type of project.
 
      ```bash
@@ -41,16 +44,26 @@
      curl -sL https://www.toptal.com/developers/gitignore/api/terraform,terragrunt >> .gitignore
      ```
 
-2. Set up [**pre-commit**](https://pre-commit.com/#install)
+2. Set up [**pre-commit**](https://pre-commit.com/#install):
 
    1. Ensure it's [installed](https://pre-commit.com/#install) locally or in an executable image.
-   2. Update the [**pre-commit config file**](/.pre-commit-config.yaml) with project-appropriate hooks and tools. The pre-commit project provides a complete list of [supported hooks here](https://pre-commit.com/hooks.html). Some popular hook sources:
+   2. Some awesome pre-commit hooks have already been added to the [**pre-commit config file**](/.pre-commit-config.yaml) for Terraform projects. If you're looking for more hooks to add, the pre-commit project provides a complete list of [supported hooks here](https://pre-commit.com/hooks.html). Some popular hook sources:
       - ["Out-of-the-Box" pre-commit Hooks](https://github.com/pre-commit/pre-commit-hooks)
       - [pre-commit Hooks from gruntwork.io](https://github.com/gruntwork-io/pre-commit)
       - [Some Terraform-specific pre-commit Hooks](https://github.com/antonbabenko/pre-commit-terraform)
    3. Run `pre-commit install` to ensure local .git hooks are present.
 
-3. Profit 💰💰💰 Also, don't forget to remove this section from the README.
+3. Enable the [**Semantic-Release GitHub Action**][semantic-gh-action-url]:
+
+   1. [Create a GitHub Personal Access Token][gh-pat-docs-url].
+   2. Add a [GitHub Secret][gh-action-docs-url] to your repo named "SEMANTIC_RELEASE_TOKEN" with the value set to the new PAT you created in the previous step.
+   3. Once the secret has been added to your repo, you can delete the "check-required-secret" job in the [release.yaml workflow](/.github/workflows/release.yaml) (it was included so you can push initialization commits without triggering a bunch of failed GH Action runs).
+
+   > Optionally, if you'd like to auto-assign GH Issues on release failures, you can add **assignees** to the "@semantic-release/github" plugin in [.releaserc.yaml](/.releaserc.yaml).
+
+4. Remove this section from the README.
+
+5. Profit 💰💰💰🥳🎉 <!-- https://knowyourmeme.com/memes/profit -->
 
 ## 🗺 Project Layout
 
@@ -58,13 +71,11 @@
 
 ## 📝 License
 
-All files and/or source code contained herein are for commercial use only by Nerdware, LLC.
-
-See [LICENSE](/LICENSE) for more information.
+Apache 2 Licensed. See [LICENSE](/LICENSE) for more information.
 
 <div align="center">
 
-## 💬 Contact
+## 💬 Template Author Contact
 
 Trevor Anderson - [@TeeRevTweets](https://twitter.com/teerevtweets) - [T.AndersonProperty@gmail.com](mailto:T.AndersonProperty@gmail.com)
 
@@ -90,3 +101,12 @@ Trevor Anderson - [@TeeRevTweets](https://twitter.com/teerevtweets) - [T.Anderso
   </a>
 
 </div>
+
+<!-- LINKS -->
+
+[pre-commit-shield]: https://img.shields.io/badge/pre--commit-33A532.svg?logo=pre-commit&logoColor=F8B424&labelColor=gray
+[semantic-shield]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-E10079.svg
+[semantic-gh-action-url]: https://github.com/cycjimmy/semantic-release-action
+[license-shield]: https://img.shields.io/badge/license-Apache_2.0-000080.svg?labelColor=gray
+[gh-action-docs-url]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+[gh-pat-docs-url]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
