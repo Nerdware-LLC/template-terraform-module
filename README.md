@@ -55,7 +55,9 @@
 
 3. Enable the [**Semantic-Release GitHub Action**][semantic-gh-action-url]:
 
-   1. [Create a GitHub Personal Access Token][gh-pat-docs-url].
+   1. [Create a GitHub Personal Access Token][gh-pat-docs-url]. When creating the token, the minimum required scopes are:
+      - `repo` for a private repository
+      - `public_repo` for a public repository
    2. Add a [GitHub Secret][gh-action-docs-url] to your repo named "SEMANTIC_RELEASE_TOKEN" with the value set to the new PAT you created in the previous step.
    3. Once the secret has been added to your repo, you can delete the "check-required-secret" job in the [release.yaml workflow](/.github/workflows/release.yaml) (it was included so you can push initialization commits without triggering a bunch of failed GH Action runs).
 
