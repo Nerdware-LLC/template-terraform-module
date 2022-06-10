@@ -74,7 +74,7 @@
 
 Apache 2 Licensed. See [LICENSE](/LICENSE) for more information.
 
-<div align="center">
+<div align="center" style="margin-top:35px;">
 
 ## 💬 Template Author Contact
 
