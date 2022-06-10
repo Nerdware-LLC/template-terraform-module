@@ -1,5 +1,7 @@
 formatter: "markdown table"
-# version: ""
+
+version: "~> 0.13"
+
 # header-from: ""
 # footer-from: ""
 
