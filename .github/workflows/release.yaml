@@ -15,7 +15,7 @@ on:
 jobs:
   # This job can be deleted once SEMANTIC_RELEASE_TOKEN has been setup.
   check-required-secret:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     outputs:
       ok: ${{ steps.check-secret.outputs.is_present }}
     steps:
@@ -33,7 +33,7 @@ jobs:
     # "needs" and "if" can be deleted once SEMANTIC_RELEASE_TOKEN has been setup.
     needs: [check-required-secret]
     if: ${{ needs.check-required-secret.outputs.is_present == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
