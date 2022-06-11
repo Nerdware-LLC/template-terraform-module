@@ -10,7 +10,7 @@ on:
       - "**/*.tf"
       - "**/*.tpl"
       - "**/README.md"
-      - ".github/workflows/release.yml"
+      - ".github/workflows/release.yaml"
 
 jobs:
   # This job can be deleted once SEMANTIC_RELEASE_TOKEN has been setup.
