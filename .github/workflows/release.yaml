@@ -7,9 +7,9 @@ on:
       - main
       - next
     paths:
-      - "**/*.tf"
-      - "**/*.tpl"
-      - "**/README.md"
+      - "**.tf"
+      - "**.tftpl"
+      - "README.md"
       - ".github/workflows/release.yaml"
 
 jobs:
