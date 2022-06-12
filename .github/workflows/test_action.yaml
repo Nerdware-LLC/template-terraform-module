@@ -1,0 +1,17 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/README.md"
+
+jobs:
+  test-path-triggers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Test GH Actions 'paths' globbing to see if '**/README.md' would trigger on README in repo root."
+        id: test-path-triggers
+        shell: bash
+        run: echo "YES - action ran!"
