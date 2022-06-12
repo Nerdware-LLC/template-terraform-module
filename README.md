@@ -13,8 +13,6 @@
 
   <!-- PROJECT TAGLINE -->
 
-  <!-- TODO rm after testing GH Action 'paths' trigger -->
-
 **🚀 An Awesome Template to Jumpstart Terraform Modules 🚀**
 
   <!-- PROJECT SHIELDS -->
