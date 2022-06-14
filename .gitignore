@@ -2,7 +2,7 @@
 ### GIT IGNORE
 ######################################################################
 # Terraform gitignore 👉 https://github.com/github/gitignore/blob/master/Terraform.gitignore
-# 
+#
 
 # Local .terraform directories
 **/.terraform
@@ -15,8 +15,9 @@
 # Crash log files
 crash.log
 
-# .tfvars files
+# Ignore .tfvars files, except the one used for testing purposes
 *.tfvars
+!tests/test.tfvars
 
 # Ignore override files (use negated pattern for overrides you wish to include)
 override.tf

@@ -51,7 +51,7 @@
       - ["Out-of-the-Box" pre-commit Hooks](https://github.com/pre-commit/pre-commit-hooks)
       - [pre-commit Hooks from gruntwork.io](https://github.com/gruntwork-io/pre-commit)
       - [Some Terraform-specific pre-commit Hooks](https://github.com/antonbabenko/pre-commit-terraform)
-   3. Run `pre-commit install` to ensure local .git hooks are present.
+   3. Run `pre-commit install` to ensure your git hooks are present.
 
 3. Enable the [**Semantic-Release GitHub Action**][semantic-gh-action-url]:
 
@@ -59,18 +59,110 @@
       - `repo` for a private repository
       - `public_repo` for a public repository
    2. Add a [GitHub Secret][gh-action-docs-url] to your repo named "SEMANTIC_RELEASE_TOKEN" with the value set to the new PAT you created in the previous step.
-   3. Once the secret has been added to your repo, you can delete the "check-required-secret" job in the [release.yaml workflow](/.github/workflows/release.yaml) (it was included so you can push initialization commits without triggering a bunch of failed GH Action runs).
+   3. Once the secret has been added to your repo, you can delete the "check-required-secret" job in the ["Release" GitHub Action workflow](/.github/workflows/release.yaml) (it was included so you can push initialization commits without triggering a bunch of failed GH Action runs). Note that the "Release" workflow will not run unless the ["Test" workflow](/.github/workflows/test.yaml) completes successfully.
+   4. (Optional) You can have GH Issues auto-assigned on release failures by adding **assignees** to the "@semantic-release/github" plugin in [.releaserc.yaml](/.releaserc.yaml).
 
-   > Optionally, if you'd like to auto-assign GH Issues on release failures, you can add **assignees** to the "@semantic-release/github" plugin in [.releaserc.yaml](/.releaserc.yaml).
+4. Enable [**Terratest**][terratest-url] testing suite:
 
-4. Remove this section from the README.
+   1. From the [tests dir](/tests/), run `go mod init "<MODULE_NAME>"` to initialize a go module, where `<MODULE_NAME>` is the name of your module, typically in the format `github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>`.
+      > Example: `go mod init github.com/trevor-anderson/template-terraform-module/tests`.
+   2. Run `go mod tidy` to ensure all required package dependencies are installed.
+   3. The existing test can be configured using the file [tests/test_params.yaml][test-params-file]. See [**Testing**](#testing) for more info.
+      > Your tests will be run by the ["Test" GitHub Action workflow](/.github/workflows/test.yaml), but you can also run them manually from the [tests dir](/tests/) using `go test -v -timeout 30m` (the flags are optional).
 
-5. Profit 💰💰💰🥳🎉 <!-- https://knowyourmeme.com/memes/profit -->
+5. Profit 💰💰💰🥳🎉 _(Also, don't forget to remove this section from the README)_ <!-- https://knowyourmeme.com/memes/profit -->
 
 > Need help? 🤔 Check out my new [**YouTube Channel**](https://www.youtube.com/channel/UCguSCK_j1obMVXvv-DUS3ng) with helpful guides covering how to **_code your cloud_** with Terraform, Terragrunt, Packer, Golang, CI/CD tools, and more.
 
+<!-- Don't remove the pre-commit TF-Docs hook comments, they're used to auto-gen your module's documentation. -->
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- prettier-ignore-start -->
+
+---
+
+## ⚙️ Module Usage
+
+### Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.2.2 |
+
+### Providers
+
+No providers.
+
+### Modules
+
+No modules.
+
+### Resources
+
+No resources.
+
+### Inputs
+
+No inputs.
+
+### Outputs
+
+No outputs.
+
+---
+
+<!-- prettier-ignore-end -->
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## 🧪 Testing
+
+This module's test suite is powered by [**Terratest**][terratest-url] and can be configured via the file [**tests/test_params.yaml**][test-params-file], which is used to define which assertions the test should make, and what values to use in those assertions.
+
+Input variables to be used for testing purposes can be specified in the file [**tests/test.tfvars**](/tests/test.tfvars). _Note that by default, this file will not be ignored by git, so sensitive values should not be included._ To override this behavior, remove the entry "!tests/test.tfvars" from the [.gitignore](/.gitignore).
+
+#### **Currently Supported Test Params:**
+
+- `expect_outputs` Map the names of expected outputs to arbitrary values of any type. The test will compare these expected outputs against the module's actual outputs; the test will fail if an expected name/key is not present, or if the expected value does not match the actual output value.
+- `verbose_logging` Increase test logging verbosity; useful for debugging purposes, or when running tests locally. May not be suitable for some CI environments.
+
+> **_Coming Soon:_** Future releases will expand the supported test params to provide additional functionality. Ideas currently in the pipeline are listed below - PRs are welcome if you've something to add.
+>
+> - `expect_http_response` Send configurable HTTP requests to created infrastructure components in order for assertions to be made using the resultant responses.
+> - `expect_error` Make configurable error assertions.
+
+#### **Test Process Outline:**
+
+1. The [**test_params file**][test-params-file] is read into memory. If invalid test params were provided, the test will fail. If the test params are valid, they're printed to stdout.
+2. Your module files are passed into [**Terratest**][terratest-url], which is used to run `terraform init`, `terraform apply`, and `terraform output` to retrieve module outputs.
+3. The provided test params are used to determine which assertions to test. For example, providing **expect_outputs** will cause the actual output keys and values to be compared against the expected outputs.
+4. Finally, once all assertions have been tested, [**Terratest**][terratest-url] is used to run `terraform destroy` to clean up all test resources - regardless of whether the tests succeed or fail.
+
+<details>
+  <summary><b>Example Test Failure Output</b></summary>
+
+If a test fails, the Terratest output will look something like the example below. Note: is verbose_logging is not enabled, the first four lines will be omitted.
+
+```shell
+TestTerraformModule 2022-06-14T12:35:17-04:00 module_unit_test.go:98:
+
+        [TEST] EXPECTED OUTPUT: foo_string_key = foo_string_value        ACTUAL: foo_string_value_NOPE
+
+module_unit_test.go:91:
+                Error Trace:    module_unit_test.go:91
+                Error:          Not equal:
+                                expected: "foo_string_value"
+                                actual  : "foo_string_value_NOPE"
+
+                                Diff:
+                                --- Expected
+                                +++ Actual
+                                @@ -1 +1 @@
+                                -foo_string_value
+                                +foo_string_value_NOPE
+                Test:           TestTerraformModule
+```
+
+</details>
 
 ## 📝 License
 
@@ -113,3 +205,5 @@ Trevor Anderson - [@TeeRevTweets](https://twitter.com/teerevtweets) - [T.Anderso
 [license-shield]: https://img.shields.io/badge/license-Apache_2.0-000080.svg?labelColor=gray
 [gh-action-docs-url]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
 [gh-pat-docs-url]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+[terratest-url]: https://terratest.gruntwork.io/docs/
+[test-params-file]: /tests/test_params.yaml
