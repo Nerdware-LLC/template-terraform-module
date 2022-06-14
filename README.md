@@ -112,7 +112,6 @@ No outputs.
 ---
 
 <!-- prettier-ignore-end -->
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## 🧪 Testing
