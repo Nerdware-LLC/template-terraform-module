@@ -4,7 +4,7 @@
   <!-- PROJECT LOGO -->
 
   <a href="https://registry.terraform.io/">
-    <img alt="Terraform" src="https://github.com/Nerdware-LLC/.github/blob/main/assets/terraform_banner.png" width="600px" />
+    <img alt="Terraform" src="https://github.com/Nerdware-LLC/.github/blob/main/org_assets/terraform_banner.png" width="600px" />
   </a>
 
   <!-- PROJECT NAME/HEADER -->
@@ -112,6 +112,7 @@ No outputs.
 ---
 
 <!-- prettier-ignore-end -->
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## 🧪 Testing
@@ -137,10 +138,11 @@ Input variables to be used for testing purposes can be specified in the file [**
 3. The provided test params are used to determine which assertions to test. For example, providing **expect_outputs** will cause the actual output keys and values to be compared against the expected outputs.
 4. Finally, once all assertions have been tested, [**Terratest**][terratest-url] is used to run `terraform destroy` to clean up all test resources - regardless of whether the tests succeed or fail.
 
+<br>
 <details>
-  <summary><b>Example Test Failure Output</b></summary>
+  <summary><b>Example Test Failure Output</b></summary><br>
 
-If a test fails, the Terratest output will look something like the example below. Note: is verbose_logging is not enabled, the first four lines will be omitted.
+If a test fails, the output will look something like the example below. Note: if verbose_logging is not enabled, the first four lines would be omitted.
 
 ```shell
 TestTerraformModule 2022-06-14T12:35:17-04:00 module_unit_test.go:98:
