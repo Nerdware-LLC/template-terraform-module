@@ -69,6 +69,14 @@
    2. Run `go mod tidy` to ensure all required package dependencies are installed.
    3. The existing test can be configured using the file [tests/test_params.yaml][test-params-file]. See [**Testing**](#testing) for more info.
       > Your tests will be run by the ["Test" GitHub Action workflow](/.github/workflows/test.yaml), but you can also run them manually from the [tests dir](/tests/) using `go test -v -timeout 30m` (the flags are optional).
+   4. In order for Terratest to run within a CI environment, you will need to provision access to your cloud resources in the ["Test" workflow](/.github/workflows/test.yaml). This is best accomplished by [adding GitHub as an OpenID Connect Identity Provider][github-oidc-info-url] within your cloud platform account. If you're operating within a multi-account organization, use a "Sandbox" account.
+   5. Once GitHub has been added as an OIDC Identity Provider, add the relevant action for your cloud provider which initiates the OIDC auth flow to authenticate the GitHub OIDC Provider and permits access to the desired cloud resources:
+
+      - AWS: [aws-actions/configure-aws-credentials][github-oidc-aws]
+      - Azure: [azure/login][github-oidc-azure]
+      - GCP: [google-github-actions/auth][github-oidc-gcp]
+      - HashiCorp Vault: [hashicorp/vault-action][github-oidc-vault]
+      - Others: [custom action using JWTs][github-oidc-others-custom-jwt]
 
 5. Profit 💰💰💰🥳🎉 _(Also, don't forget to remove this section from the README)_ <!-- https://knowyourmeme.com/memes/profit -->
 
@@ -112,6 +120,7 @@ No outputs.
 ---
 
 <!-- prettier-ignore-end -->
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## 🧪 Testing
@@ -208,3 +217,9 @@ Trevor Anderson - [@TeeRevTweets](https://twitter.com/teerevtweets) - [T.Anderso
 [gh-pat-docs-url]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [terratest-url]: https://terratest.gruntwork.io/docs/
 [test-params-file]: /tests/test_params.yaml
+[github-oidc-info-url]: https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
+[github-oidc-aws]: https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions
+[github-oidc-azure]: https://github.com/Azure/login
+[github-oidc-gcp]: https://github.com/google-github-actions/auth
+[github-oidc-vault]: https://github.com/hashicorp/vault-action
+[github-oidc-others-custom-jwt]: https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-cloud-providers

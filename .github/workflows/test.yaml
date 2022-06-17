@@ -23,6 +23,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: "tests/go.mod"
+      # TODO Add workflow step here which authenticates GitHub OIDC Provider (see README for more info).
       - name: Run Tests
         shell: bash
         run: cd tests && go test -v -timeout 30m
